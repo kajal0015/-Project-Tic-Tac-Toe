@@ -1,0 +1,76 @@
+const cells=document.querySelectorAll('cell');
+const  statusText=document.querySelectorAll('status');
+const restartBtn=document.querySelectorAll('restartBtn');
+const winConditions=[[0,1,2],[3,4,5],[6,7,8]
+[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+
+let options=["","","","","","","",""];
+let currentPlayer="X";
+let running=true;
+initializeGame();
+function initializeGame(){
+    cells.forEach(cell=>cell.addEventListener('click', cellClicked));
+restartBtn.addEventListener('click',restartBtngame);
+statusText.textContent='player ${currentPlayer}';}
+function cellClicked(){
+    const cellindex=this.getAttribute('data-index');
+    if(options[cellindex]!==""||!running){
+        return ;
+
+    }updateCell(this,cellindex);
+    checkWinner();
+
+}
+function updateCell(cell,index){
+    options[index]=currentPlayer;
+    cell.textContent=currentPlayer;
+    cell.classList.add(currentPlayer);
+}
+function changePlayer(){
+    
+        currentPlayer=(currentPlayer==="X")?"o":"X";
+        statusText.textContent='Player ${currentPlayer}';
+
+    }
+    function checkWinner(){
+        let roundWon=false;
+        for(let i=0;i<winConditions.length;i++){
+            const condition=winConditions[i];
+            const cellA=options[condition[0]];
+             const cellB=options[condition[1]];
+             const cellC=options[condition[2]];
+             if(cellA ===""||cellB===""||cellC==="" ){
+                continue;
+
+             }
+            if(cellA===""||cellB ===""||cellC){
+                roundWon=true;
+                break;
+
+            }
+        }
+        if(roundWon){
+            statusText.textContent='player  ${currentPlayer}';
+            running =false;
+        }else if
+            (!options.includes("")){
+                statusText.textContent=game
+            }
+
+        
+
+        else{changePlayer();
+        }
+    }
+    function restartgame(){
+        currentPlayer="x";
+        options=["","","","","","","",""];
+        statusText.textContent='player  ${currentPlayer}';
+        cells.forEach(cell=>{
+            cell.textContent="";
+            cell.classList.remove('x','o');
+
+        });
+        running =true;
+
+    }
